@@ -23,4 +23,10 @@ func Connection() {
 	}
 
 	DB = db
+
+	if DB == nil {
+		log.Fatal("❌ Database instance is NIL!")
+	} else {
+		log.Println("✅ Database connected successfully")
+	}
 }
