@@ -17,9 +17,9 @@ var LifeTime string
 var UrlImage string
 
 func Initialize() {
-	err := godotenv.Load()
+	err := godotenv.Load("../.env")
 	if err != nil {
-		log.Println("[Error] : Error loading .env file")
+		log.Println("❌ [Error] : Error loading .env file", err)
 	}
 
 	DbHost = os.Getenv("DB_HOST")
