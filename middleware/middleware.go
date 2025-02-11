@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func Middleware() fiber.Handler {
+func Middleware(service Service) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		headers := ctx.GetReqHeaders()["Authorization"]
 		header := strings.Join(headers, " ")
@@ -24,7 +24,7 @@ func Middleware() fiber.Handler {
 			token = authorization[1]
 		}
 
-		validateToken, err := VerifyToken(token)
+		validateToken, err := service.VerifyToken(token)
 		if err != nil || !validateToken.Valid {
 			response := helper.JsonResponse(http.StatusUnauthorized, "Unauthorized", false, err.Error(), err)
 			return ctx.Status(fiber.StatusUnauthorized).JSON(response)

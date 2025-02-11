@@ -2,6 +2,7 @@ package resource
 
 import (
 	"github.com/simabdi/vodka-authservice/config"
+	"github.com/simabdi/vodka-authservice/helper"
 	"github.com/simabdi/vodka-authservice/models"
 	"github.com/simabdi/vodka-authservice/models/formatter"
 )
@@ -77,4 +78,15 @@ func UserCollectionResource(users []models.User) []formatter.UserFormatter {
 	}
 
 	return resourceCollection
+}
+
+func UserPaginationResources(users []models.User) helper.PaginateResource {
+	resource := helper.PaginateResource{
+		Data:    UserCollectionResource(users),
+		Page:    helper.PagePaginate,
+		PerPage: helper.PerPagePaginate,
+		Total:   helper.TotalRecord,
+	}
+
+	return resource
 }
