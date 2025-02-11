@@ -118,11 +118,11 @@ func (r *repository) GetAll(ctx *fiber.Ctx) ([]models.User, error) {
 	var user []models.User
 	var count int64
 
-	err := r.db.Find(&user, "role != ?", "ADMIN").Error
+	err := r.db.Scopes(statusActive, helper.Paginate(ctx)).Find(&user, "role != ?", "ADMIN").Error
 	if err != nil {
 		return user, err
 	}
-	r.db.Scopes(statusActive, helper.Paginate(ctx)).Model(&user).Count(&count)
+	r.db.Scopes(statusActive).Model(&user).Count(&count)
 	helper.TotalRecord = count
 
 	r.db.Logger = logger.Default.LogMode(logger.Info)
