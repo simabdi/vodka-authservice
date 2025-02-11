@@ -122,7 +122,7 @@ func (r *repository) GetAll(ctx *fiber.Ctx) ([]models.User, error) {
 	if err != nil {
 		return user, err
 	}
-	r.db.Scopes(statusActive).Model(&user).Count(&count)
+	r.db.Scopes(statusActive, helper.Paginate(ctx)).Model(&user).Count(&count)
 	helper.TotalRecord = count
 
 	r.db.Logger = logger.Default.LogMode(logger.Info)
