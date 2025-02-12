@@ -8,9 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-
-func Connection() {
+func Connection() *gorm.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUsername, DbPassword, DbHost, DbPort, DbDatabase)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -22,11 +20,11 @@ func Connection() {
 		panic(exception.Error(err))
 	}
 
-	DB = db
-
-	if DB == nil {
+	if db == nil {
 		log.Fatal("❌ Database instance is NIL!")
 	} else {
 		log.Println("✅ Database connected successfully")
 	}
+
+	return db
 }
